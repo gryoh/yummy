@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <main className={styles.main}>
             <Header></Header>
-            <div>메인 내용</div>
+            <div>메인 내용222</div>
             <Footer></Footer>
         </main>
     );
