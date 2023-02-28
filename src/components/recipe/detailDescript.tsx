@@ -20,13 +20,14 @@ interface FixedDataType {
   const detailDescript = (props = {
     recipedescription : [],
   })=>{
+  const mapLength = props.recipedescription.length;
 
-  let keyMap = [];
-  props.recipedescription.map((it)=>{
+  let keyMap : any;
+  props.recipedescription.map((it : any)=>{
     keyMap.push(it.key);
   })
-  let valueMap = [];
-  props.recipedescription.map((it)=>{
+  let valueMap : any;
+  props.recipedescription.map((it : any)=>{
     valueMap.push(it.value);
   })
 
@@ -44,11 +45,11 @@ interface FixedDataType {
   ];
 
   const fixedData: FixedDataType[] = [];
-  for (let i = 0; i < keyMap.length; i += 1) {
+  for (let i = 0; i < mapLength; i += 1) {
     fixedData.push({
       key: i,
-      name: keyMap[i%keyMap.length],
-      description: valueMap[i%keyMap.length],
+      name: keyMap[i%mapLength],
+      description: valueMap[i%mapLength],
     });
   }
 
