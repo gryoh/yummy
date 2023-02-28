@@ -168,19 +168,22 @@ export default function handler(req, res) {
 
     Object.assign(conditionsKey, paramKey);
 
+    // day가 있으면 비교하기
+    // name이 있으면 비교하기(영문을 위해 lowercase로 비교)
     const conditions = (mealPlanner) => {
         if (
-            typeof Number(conditionsKey.day) === "number" &&
-            mealPlanner.day != conditionsKey.day
+            (conditionsKey.day != undefined
+                && typeof Number(conditionsKey.day) === "number"
+                && mealPlanner.day != conditionsKey.day)
         )
             return false;
 
         if (
             typeof conditionsKey.name === "string" &&
-            conditionsKey.name != "" &&
+            (conditionsKey.name != "" &&
             !mealPlanner.name
                 ?.toLowerCase()
-                .includes(conditionsKey.name.toLowerCase())
+                .includes(conditionsKey.name.toLowerCase()))
         )
             return false;
 
