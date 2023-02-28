@@ -1,0 +1,57 @@
+.btn_member {
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 0%;
+}
+
+.input_member {
+    margin: 5px 0;
+    border-radius: 0%;
+}
+
+.btn_kakao {
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 15px;
+    background-color: #FEE500;
+    color: #000;
+}
+.btn_naver {
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 15px;
+    background-color: #03C75A;
+    color: #fff;
+}
+
+.img_member_btn{
+    height: 22px;
+    width: 22px;
+    float: left;
+}
+
+.img_line{
+    width: 45%;
+    height: 22px;
+    float: left;
+}
+
+.line_text {
+    width: 10%;
+    text-align: center;
+    height: 22px;
+    line-height: 22px;
+    float: left;
+    font-size: 14px;
+}
+
+.base_txt_box {
+    text-align: center;
+    font-size: 14px;
+}
+
+.blue_link_txt {
+    text-decoration: none;
+    color: #1677ff;
+    font-size: 14px;
+}
