@@ -2,3 +2,10 @@
     height: 70px;
     width: 70px;
 }
+.lateView_img_box{
+    float: left;
+}
+.lateView_cont_box {
+    float: left;
+    margin-left: 200;
+}
