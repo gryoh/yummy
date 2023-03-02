@@ -47,13 +47,14 @@ export default function Create() {
     function renderAddMealPlannerList() {
         if(selectedMpList.length < 1){
             return (
-                <div>아래에서 선택하여 추가해주세요</div>
+                <div className={utilStyles.noMealList}>아래에서 선택하여 추가해주세요</div>
             );
         }
 
         return selectedMpList.map((value, index) => (
             <Col span={8} key={index}>
-                <img src={value.image} width={100} alt="식단추가" onClick={handlerRemoveMp} data-mpcd={value.mpCd} />
+                <div className={utilStyles.mealListRemoveBtn}>삭제</div>
+                <img src={value.image} width="100%" alt={value.name} onClick={handlerRemoveMp} data-mpcd={value.mpCd} />
             </Col>
         ));
     }
@@ -65,7 +66,7 @@ export default function Create() {
         const clickedMpImage = item?.target.dataset.mpimage;
 
         // 이미 등록된 레시피면 alert
-        if(selectedMpList.filter(mp => mp.mpCd == clickedMpCd)?.length > 0){
+        if(selectedMpList.filter(mp => mp.mpCd === clickedMpCd).length > 0){
             alert("이미 등록되어 있습니다");
             return false;
         }
@@ -88,7 +89,7 @@ export default function Create() {
         const clickedItemMpCd = item.target.dataset.mpcd;
         let tempSelectedMpList = [];
         selectedMpList.forEach((mpItem) => {
-            if (mpItem.mpCd != clickedItemMpCd) {
+            if (mpItem.mpCd !== clickedItemMpCd) {
                 tempSelectedMpList.push(mpItem);
             }
         });
@@ -138,8 +139,7 @@ export default function Create() {
                 placeholder="메뉴를 입력해주세요"
                 allowClear
                 onSearch={onSearch}
-                style={{ width: 200 }}
-                //enterButton
+                enterButton
             />
         </div>
     );
@@ -180,7 +180,7 @@ export default function Create() {
                 let tempPageIdx = pageIdx;
                 setPageIdx(++tempPageIdx);
 
-                if (result.find((mp) => mp.mpCd == res.lastMpCd)) {
+                if (result.find((mp) => mp.mpCd === res.lastMpCd)) {
                     console.log("더이상 없음");
                     setIsLastData(true);
                 }
@@ -237,7 +237,7 @@ export default function Create() {
                             <List.Item.Meta
                                 avatar={<Avatar src={item.image} />}
                                 title={
-                                    <Link href="/recipe/1">{item.name}</Link>
+                                    <Link href={"/recipe/recipeDetail?recipeId=" + item.mpCd}>{item.name}</Link>
                                 }
                                 description={item.description}
                             />
