@@ -42,7 +42,7 @@ function rollingMove(moveDistance) {
     const nowWidth = document.getElementById("rolllingList").offsetWidth;
 
     let nowTransLateX = document.getElementById("rollingIner").style.transform;
-    nowTransLateX = parseFloat(nowTransLateX.substring(11, nowTransLateX.length - 3));
+    nowTransLateX = !!parseFloat(nowTransLateX.substring(11, nowTransLateX.length - 3)) ? parseFloat(nowTransLateX.substring(11, nowTransLateX.length - 3)) : 0;
     if(moveDistance > 0) {
         if(nowTransLateX + moveDistance > 0) {
             document.getElementById("rollingIner").style.transform = `translateX(0px)`;
@@ -54,6 +54,7 @@ function rollingMove(moveDistance) {
         if(nowTransLateX + moveDistance + totalLength < nowWidth) {
             document.getElementById("rollingIner").style.transform = `translateX(${-totalLength + nowWidth -10}px)`;
         }else {
+            moveDistance += nowTransLateX;
             document.getElementById("rollingIner").style.transform = `translateX(${moveDistance}px)`;
         }
     }
