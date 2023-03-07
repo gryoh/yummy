@@ -8,8 +8,7 @@
 }
 .lateView_cont_box {
     float: left;
-    width: 200px;
-    margin: 10px 0;
+    width: 55%;
 }
 .lateView_cont_box p {
     padding-left: 10px;
@@ -50,4 +49,11 @@
 }
 .mypageCont_box {
     margin: 20px 10px;
+}
+.wishlist_btn_box {
+   text-align: right;
+}
+.lateView_wish_box {
+    text-align: right;
+
 }

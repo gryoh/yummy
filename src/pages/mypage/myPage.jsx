@@ -12,7 +12,7 @@ import globalStyle from "../../assets/global.css";
 
 
 
-export default function MyPage() {
+export default function Mypage() {
     const [ingredienrList, setIngredienrList] = useState([]);
     const [loveRecipeList, setloveRecipeList] = useState([]);
     useEffect(() => {
