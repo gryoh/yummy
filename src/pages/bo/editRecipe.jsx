@@ -1,21 +1,14 @@
 import {Button, message, Upload, Form, Select} from 'antd';
 import React, { useState } from 'react';
-import Recipe from "../../../components/bo/recipe/Recipe";
-import CustomLayout from "../../../components/common/layout";
+import Recipe from "../../components/bo/recipe/Recipe";
+import CustomLayout from "../../components/common/layout";
 import { Input } from 'antd';
 import Head from "next/head";
-import Ingredients from "../../../components/bo/recipe/Ingredients";
+import Ingredients from "../../components/bo/recipe/Ingredients";
 import Link from "next/link";
 
-export async function getServerSideProps({ params, req }) {
-    return {
-        props: {
-            params,
-        },
-    };
-}
 
-export default function RecipeId ({params}) {
+export default function App () {
 
     const [recipeList, setRecipeList] = useState([{id: 1, text: ''}]);
     const [ingreList, setIngreList] = useState([{id: 1, name: '', cnt: ''}]);
@@ -54,7 +47,7 @@ export default function RecipeId ({params}) {
                 }}
             >
                 <Form.Item label="레시피명">
-                    <Input value={params.recipeId}/>
+                    <Input />
                 </Form.Item>
                 <Form.Item label="종류">
                     <Select

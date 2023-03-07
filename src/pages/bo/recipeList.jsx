@@ -13,10 +13,10 @@ const columns = [
         title: '음식명',
         dataIndex: 'name',
         width: '20%',
-        render: (_, record) =>
-            <Link href={`/bo/recipeDetail/${record.key}`}>
-                {record.name}
-            </Link>
+        //render: (_, record) =>
+            //<Link href={`/bo/editRecipe/${record.key}`}>
+          //      {record.name}
+            //</Link>
     },
     {
         title: '종류',
@@ -24,7 +24,7 @@ const columns = [
     },
 ];
 
-export default function RecipeList() {
+export default function App() {
     const [data, setData] = useState();
     const [totalPages, setTotalPages] = useState();
     const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ export default function RecipeList() {
                     <title>타이틀</title>
             </Head>
             <div style={{textAlign: 'right'}}>
-                <Link href="/bo/recipeDetail/[recipeId]">
+                <Link href="/bo/editRecipe">
                 <Button type="primary" style={{width: '30%'}} ghost>
                     등록
                 </Button>
