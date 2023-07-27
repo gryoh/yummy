@@ -71,7 +71,7 @@ export default function RecipeId ({params}) {
                         options={[
                             {
                                 value: '1',
-                                label: '중식',
+                                label: '중식1',
                             },
                             {
                                 value: '2',
