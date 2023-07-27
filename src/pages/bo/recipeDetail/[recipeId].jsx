@@ -6,16 +6,24 @@ import { Input } from 'antd';
 import Head from "next/head";
 import Ingredients from "../../../components/bo/recipe/Ingredients";
 import Link from "next/link";
+import TextEditor from "../../../components/bo/recipe/TextEditor";
 
-export async function getServerSideProps({ params, req }) {
+export async function getServerSideProps({params, req}) {
+        let data = {};
+        await fetch("http://localhost:3000/api/bo/recipeData?recipeId="+params.recipeId)
+            .then((res) => res.json())
+            .then((results) => {
+                    data = results;
+        })
     return {
         props: {
-            params,
+            data,
         },
     };
 }
 
-export default function RecipeId ({params}) {
+export default function RecipeId (params,{data}) {
+console.log(data.name)
 
     const [recipeList, setRecipeList] = useState([{id: 1, text: ''}]);
     const [ingreList, setIngreList] = useState([{id: 1, name: '', cnt: ''}]);
@@ -34,6 +42,19 @@ export default function RecipeId ({params}) {
             name: '',
             cnt:''
         }))
+    }
+
+    async function save() {
+
+        const val = [{
+            value : value
+        }]
+
+        const formData = new FormData();
+        formData.append('img', file); // formData는 키-밸류 구조
+        // 백엔드 multer라우터에 이미지를 보낸다.
+        console.log(formData)
+
     }
 
     return (
@@ -58,6 +79,7 @@ export default function RecipeId ({params}) {
                 </Form.Item>
                 <Form.Item label="종류">
                     <Select
+                        defaultValue={params.recipeId}
                         showSearch
                         style={{
                             width: 200,
@@ -70,16 +92,16 @@ export default function RecipeId ({params}) {
                         }
                         options={[
                             {
-                                value: '1',
-                                label: '중식1',
+                                value: 1,
+                                label: '한식',
                             },
                             {
-                                value: '2',
+                                value: 2,
                                 label: '양식',
                             },
                             {
-                                value: '3',
-                                label: '한식',
+                                value: 3,
+                                label: '중식',
                             }
                         ]}
                     />
@@ -104,7 +126,7 @@ export default function RecipeId ({params}) {
                     취소
                 </Button>
             </Link>
-            <Button type="primary" style={{width: '45%', margin: '0 8px'}} ghost>
+            <Button type="primary" style={{width: '45%', margin: '0 8px'}} ghost onClick={save}>
                 저장
             </Button>
         </CustomLayout>

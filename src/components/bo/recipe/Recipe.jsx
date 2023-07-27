@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import {Space, Button, Input, Upload, message, Form} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
+import TextEditor from "./TextEditor";
 
 
 const onChange = (e) => {
@@ -74,7 +75,11 @@ export default function Recipe(props){
                 marginBottom: 0,
             }}
         >
-            {props.recipeList && props.recipeList.map((item, i) => (
+            <Form.Item>
+                <TextEditor />
+            </Form.Item>
+
+            {/*{props.recipeList && props.recipeList.map((item, i) => (
                 <Form.Item key={item.id}>
                     <Form.Item
                         name={`content${item.id}`}
@@ -94,7 +99,7 @@ export default function Recipe(props){
                             placeholder=""
                             value={item.text}
                         />
-                        {/*<textarea value={item.text} rows='10' cols='45' />*/}
+                        <textarea value={item.text} rows='10' cols='45' />
                     </Form.Item>
                     <Form.Item
                         name=""
@@ -149,7 +154,7 @@ export default function Recipe(props){
                         </Button>
                     </Form.Item>
                 </Form.Item>
-            ))}
+            ))}*/}
         </Form.Item>
     )
 }
