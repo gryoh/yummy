@@ -14,7 +14,7 @@ const columns = [
         dataIndex: 'name',
         width: '20%',
         render: (_, record) =>
-            <Link href={`/bo/editRecipe/${record.key}`}>
+            <Link href={`/bo/recipeDetail/${record.key}`}>
                 {record.name}
             </Link>
     },
