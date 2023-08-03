@@ -8,52 +8,86 @@ import Ingredients from "../../../components/bo/recipe/Ingredients";
 import Link from "next/link";
 import TextEditor from "../../../components/bo/recipe/TextEditor";
 
-export async function getServerSideProps({params, req}) {
-        let data = {};
-        await fetch("http://localhost:3000/api/bo/recipeData?recipeId="+params.recipeId)
+export async function getServerSideProps({params}) {
+    let data = {};
+        await fetch(`http://localhost:3000/api/bo/recipeData?recipeId=${params.recipeId}`)
             .then((res) => res.json())
             .then((results) => {
                     data = results;
         })
+
+    let ingreOptions = {};
+        await fetch(`http://localhost:3000/api/bo/recipeData?recipeId=ingre`)
+        .then((res) => res.json())
+        .then((results) => {
+            ingreOptions = results;
+        })
+
+    let type = {};
+    await fetch(`http://localhost:3000/api/bo/recipeData?recipeId=type`)
+        .then((res) => res.json())
+        .then((results) => {
+            type = results;
+        })
+
     return {
         props: {
             data,
+            type,
+            ingreOptions,
         },
     };
 }
 
-export default function RecipeId (params,{data}) {
-console.log(data.name)
-
-    const [recipeList, setRecipeList] = useState([{id: 1, text: ''}]);
-    const [ingreList, setIngreList] = useState([{id: 1, name: '', cnt: ''}]);
-    const makeRecipe = () => {
+export default function RecipeId ({data, type, ingreOptions}) {
+    /*const [recipeList, setRecipeList] = useState([{id: 1, text: ''}]);*/
+    const [ingreList, setIngreList] = useState([]);
+    const [contentValue, setContentValue] = useState('');
+    const [form, setForm] = useState(
+        {
+            title : '',
+            ingre : [],
+            type : '',
+            content :''
+        }
+    );
+    /*const makeRecipe = () => {
         let cnt = recipeList[recipeList.length-1].id
         setRecipeList(recipeList.concat({
             id: ++cnt,
             text: ''
         }))
-    }
+    }*/
 
     const makeIngre = () => {
-        let id = ingreList[ingreList.length-1].id
+        let id = 1;
+
+        if ( ingreList.length > 0) {
+            id = ingreList[ingreList.length-1].id +1
+        }
+
         setIngreList(ingreList.concat({
-            id: ++id,
+            id: id,
             name: '',
             cnt:''
         }))
     }
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({
+            ...form,
+            [name]: value
+        })
+    }
+
     async function save() {
-
-        const val = [{
-            value : value
-        }]
-
-        const formData = new FormData();
-        formData.append('img', file); // formData는 키-밸류 구조
+        //const formData = new FormData();
+        //formData.append('img', file); // formData는 키-밸류 구조
         // 백엔드 multer라우터에 이미지를 보낸다.
-        console.log(formData)
+        console.log(ingreList)
+        console.log(contentValue)
+        console.log(form)
 
     }
 
@@ -75,11 +109,14 @@ console.log(data.name)
                 }}
             >
                 <Form.Item label="레시피명">
-                    <Input value={params.recipeId}/>
+                    <Input name="title" value={data.name} onChange={handleChange}/>
                 </Form.Item>
                 <Form.Item label="종류">
                     <Select
-                        defaultValue={params.recipeId}
+                        name = "type"
+                        value ={data.value}
+                        onChange={handleChange}
+                        defaultValue={data.typekey}
                         showSearch
                         style={{
                             width: 200,
@@ -90,36 +127,36 @@ console.log(data.name)
                         filterSort={(optionA, optionB) =>
                             (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                         }
-                        options={[
-                            {
-                                value: 1,
-                                label: '한식',
-                            },
-                            {
-                                value: 2,
-                                label: '양식',
-                            },
-                            {
-                                value: 3,
-                                label: '중식',
-                            }
-                        ]}
-                    />
+                    >
+                        {type.data.map(data => (
+                          <option value={data.value}>{data.label}</option>
+                        ))}
+                    </Select>
                 </Form.Item>
-                <Ingredients ingreList={ingreList} setIngreList={setIngreList}>
+                <Ingredients ingreOptions={ingreOptions} ingreList={ingreList} setIngreList={setIngreList}>
                 </Ingredients>
                 <Form.Item label=":">
                     <Button onClick={makeIngre} type="primary" style={{width: '100%'}} ghost>
                         재료 추가
                     </Button>
                 </Form.Item>
-                <Recipe recipeList={recipeList} setRecipeList={setRecipeList}>
-                </Recipe>
-                <Form.Item label=":">
-                    <Button onClick={makeRecipe} type="primary" style={{width: '100%'}} ghost>
-                        레시피 추가
-                    </Button>
+                {/*<Recipe recipeList={recipeList} setRecipeList={setRecipeList}>
+                </Recipe>*/}
+                <Form.Item
+                    label="레시피"
+                    style={{
+                        marginBottom: 0,
+                    }}
+                >
+                    <Form.Item>
+                        <TextEditor contentValue={contentValue} setContentValue={setContentValue}/>
+                    </Form.Item>
                 </Form.Item>
+                {/*<Form.Item label=":">*/}
+                {/*    <Button onClick={makeRecipe} type="primary" style={{width: '100%'}} ghost>*/}
+                {/*        레시피 추가*/}
+                {/*    </Button>*/}
+                {/*</Form.Item>*/}
             </Form>
             <Link href="/bo/recipeList">
                 <Button type="primary" style={{width: '45%', margin: '0 8px'}} ghost>
