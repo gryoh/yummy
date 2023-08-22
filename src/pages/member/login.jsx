@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, {useState, useRef } from "react";
 import Layout from "../../components/common/layout";
 import MemberInput from "../../components/member/MemberInput";
 import MemberBtn from "../../components/member/MemberBtn";
@@ -8,24 +8,56 @@ import KakaoBtn from "../../components/member/KakaoBtn";
 import NaverBtn from "../../components/member/NaverBtn";
 import Link from "next/link";
 import styles from "../../components/member/member.module.css";
+import axios from 'axios';
 
 export default function Login() {
+    const [loginId, setLoginId] = useState("");
+    const [loginPw, setLoginPw] = useState("");
+
+    const childRef = useRef();
+ 
+    const parentBtnEvent = (e) => {
+        console.log("click login");
+        console.log("ID : ", loginId);
+        console.log("PW : ", loginPw);
+        axios.post('http://localhost:8080/member/login',
+        {
+            loginId : loginId,
+            mbrPw :loginPw
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
     const router = useRouter();
 
     if (router.isFallback) {
         return <div>Loading...</div>;
     }
 
+
+    const handleloginId = (e) => {
+        setLoginId(e.target.value);
+      };
+    
+    const handleloginPw = (e) => {
+        setLoginPw(e.target.value);
+    };
+
     return (
         <Layout>
             <KakaoBtn text='카카오 로그인'/>
             <NaverBtn text='네이버 로그인'/>
             <MemberLine text='또는'/>
-            <form>
-                <MemberInput placeholder='이메일' name='eMail' /><br />
-                <MemberInput placeholder='비밀번호' name='passWord' /><br />
-                <MemberBtn name='로그인' type='submit'/><br />
-            </form>
+            
+            <MemberInput placeholder='이메일' name='eMail' value={loginId} parentInputEvent={handleloginId} ref={childRef}/><br />
+            <MemberInput placeholder='비밀번호' name='passWord' value={loginPw} parentInputEvent={handleloginPw} ref={childRef}/><br />
+            <MemberBtn name='로그인' type='button' parentBtnEvent={parentBtnEvent} ref={childRef}/><br />
+            
             <p className={styles.base_txt_box}>계정이 없으신가요? <Link href="/member/join" className={styles.blue_link_txt}>가입하기</Link> </p>
         </Layout>
     );
