@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local": "env-cmd -f .env.local next dev -p 3000",
+    "dev": "next dev",
     "build": "next build",
-    "build:dev": "env-cmd -f .env.development next build",
-    "build:prod": "env-cmd -f .env.production next build",
-    "start": "next start -p 3000",
-    "start:dev": "env-cmd -f .env.development next start -p 3000",
-    "start:prod": "env-cmd -f .env.production next start -p 3000"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@next/font": "13.2.1",
@@ -17,21 +14,12 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "antd": "^5.2.2",
-<<<<<<< HEAD
     "axios": "^1.4.0",
-=======
-    "aws-sdk": "^2.1414.0",
-    "axios": "^1.4.0",
-    "cors": "^2.8.5",
->>>>>>> develop
     "eslint": "8.34.0",
     "eslint-config-next": "13.2.1",
-    "express": "^4.18.2",
-    "multer": "^1.4.5-lts.1",
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-quill": "^2.0.0",
     "typescript": "4.9.5"
   }
 }
