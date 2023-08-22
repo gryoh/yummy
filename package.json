@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local": "env-cmd -f .env.local next dev -p 3000",
-    "build": "next build",
+    "build": "env-cmd -f .env.local next build",
+    "dev": "env-cmd -f .env.local next dev -p 3000",
     "build:dev": "env-cmd -f .env.development next build",
-    "build:prod": "env-cmd -f .env.production next build",
-    "start": "next start -p 3000",
     "start:dev": "env-cmd -f .env.development next start -p 3000",
+    "build:prod": "env-cmd -f .env.production next build",
     "start:prod": "env-cmd -f .env.production next start -p 3000"
   },
   "dependencies": {
