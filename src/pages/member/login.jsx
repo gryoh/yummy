@@ -20,7 +20,7 @@ export default function Login() {
         console.log("click login");
         console.log("ID : ", loginId);
         console.log("PW : ", loginPw);
-        axios.post('http://localhost:8080/member/login',
+        axios.post('/member/login',
         {
             loginId : loginId,
             mbrPw :loginPw
