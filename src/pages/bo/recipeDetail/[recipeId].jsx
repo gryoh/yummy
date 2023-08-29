@@ -44,6 +44,7 @@ export default function RecipeId ({data, type, ingreOptions}) {
     const [title, setTitle] = useState(data.name);
     const [ingreList, setIngreList] = useState([]);
     const [contentValue, setContentValue] = useState('');
+
     /*const makeRecipe = () => {
         let cnt = recipeList[recipeList.length-1].id
         setRecipeList(recipeList.concat({
