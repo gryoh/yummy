@@ -13,6 +13,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/member/:path*",
+        destination: isDevelopment ? "http://localhost:8080/member/:path*" : "http://gryoh.synology.me:8083/member/:path*",
+      },
+      {
         source: "/v1/:path*",
         destination: isDevelopment ? "http://localhost:8080/v1/:path*" : "http://gryoh.synology.me:8083/v1/:path*",
       },

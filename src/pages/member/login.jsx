@@ -17,19 +17,18 @@ export default function Login() {
     const childRef = useRef();
  
     const parentBtnEvent = (e) => {
-        console.log("click login");
         console.log("ID : ", loginId);
         console.log("PW : ", loginPw);
-        axios.post('/member/login',
+        axios.post('/member/goLogin',
         {
             loginId : loginId,
             mbrPw :loginPw
         })
         .then((res) => {
-            console.log(res)
+            console.log(res.data)
         })
         .catch((error) => {
-            console.log(error)
+            console.log('error --->' + error)
         })
     }
 
