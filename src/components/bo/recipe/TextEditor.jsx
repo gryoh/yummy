@@ -12,11 +12,8 @@ import AWS from "aws-sdk";
       {ssr: false}
   );
 
-export default function TextEditor(){
-    const [value, setValue] = useState('<p>aa</p>');
+export default function TextEditor(props){
     const quillRef = useRef();
-    console.log(value)
-
 
     const imageHandler = () => {
         console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
@@ -131,8 +128,8 @@ export default function TextEditor(){
         <div>
             <ReactQuill
                 forwardedRef={quillRef}
-                value={value}
-                onChange={setValue}
+                value={props.contentValue}
+                onChange={props.setContentValue}
                 modules={modules}
             />
             {/*<div dangerouslySetInnerHTML={{ __html :  value }} />*/}

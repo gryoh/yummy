@@ -58,7 +58,7 @@ export default function RecipeList() {
                     <title>타이틀</title>
             </Head>
             <div style={{textAlign: 'right'}}>
-                <Link href="/bo/recipeDetail/[recipeId]">
+                <Link href="/bo/recipeDetail/0">
                 <Button type="primary" style={{width: '30%'}} ghost>
                     등록
                 </Button>
