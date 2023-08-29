@@ -1,5 +1,5 @@
 import {Button, message, Upload, Form, Select} from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Recipe from "../../../components/bo/recipe/Recipe";
 import CustomLayout from "../../../components/common/layout";
 import { Input } from 'antd';
@@ -41,16 +41,9 @@ export async function getServerSideProps({params}) {
 
 export default function RecipeId ({data, type, ingreOptions}) {
     /*const [recipeList, setRecipeList] = useState([{id: 1, text: ''}]);*/
+    const [title, setTitle] = useState(data.name);
     const [ingreList, setIngreList] = useState([]);
     const [contentValue, setContentValue] = useState('');
-    const [form, setForm] = useState(
-        {
-            title : '',
-            ingre : [],
-            type : '',
-            content :''
-        }
-    );
     /*const makeRecipe = () => {
         let cnt = recipeList[recipeList.length-1].id
         setRecipeList(recipeList.concat({
@@ -59,35 +52,17 @@ export default function RecipeId ({data, type, ingreOptions}) {
         }))
     }*/
 
-    const makeIngre = () => {
-        let id = 1;
-
-        if ( ingreList.length > 0) {
-            id = ingreList[ingreList.length-1].id +1
-        }
-
-        setIngreList(ingreList.concat({
-            id: id,
-            name: '',
-            cnt:''
-        }))
-    }
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
-
     async function save() {
-        //const formData = new FormData();
-        //formData.append('img', file); // formData는 키-밸류 구조
-        // 백엔드 multer라우터에 이미지를 보낸다.
         console.log(ingreList)
+        console.log(title)
         console.log(contentValue)
-        console.log(form)
+
+        // axios.post(`${apiUrl}/posts/`, {
+        //     ingreList : ingreList,
+        //     title : title,
+        //     contentValue : contentValue,}).then(() => {
+        //     //navigate('../');
+        // })
 
     }
 
@@ -108,14 +83,12 @@ export default function RecipeId ({data, type, ingreOptions}) {
                     maxWidth: 1000,
                 }}
             >
-                <Form.Item label="레시피명">
-                    <Input name="title" value={data.name} onChange={handleChange}/>
+                <Form.Item label="레시피명" style={{fontWeight: "bold"}}>
+                    <Input name="title" value={title}/>
                 </Form.Item>
-                <Form.Item label="종류">
+                <Form.Item label="종류" style={{fontWeight: "bold"}}>
                     <Select
                         name = "type"
-                        value ={data.value}
-                        onChange={handleChange}
                         defaultValue={data.typekey}
                         showSearch
                         style={{
@@ -129,23 +102,20 @@ export default function RecipeId ({data, type, ingreOptions}) {
                         }
                     >
                         {type.data.map(data => (
-                          <option value={data.value}>{data.label}</option>
+                          <Select.Option key={data.value} value={data.value}>{data.label}</Select.Option>
                         ))}
                     </Select>
                 </Form.Item>
-                <Ingredients ingreOptions={ingreOptions} ingreList={ingreList} setIngreList={setIngreList}>
-                </Ingredients>
-                <Form.Item label=":">
-                    <Button onClick={makeIngre} type="primary" style={{width: '100%'}} ghost>
-                        재료 추가
-                    </Button>
-                </Form.Item>
+                {/*<Form.Item style={{marginTop:0}} label="">*/}
+                    <Ingredients ingreOptions={ingreOptions} ingreList={ingreList} setIngreList={setIngreList}>
+                    </Ingredients>
+                {/*</Form.Item>*/}
                 {/*<Recipe recipeList={recipeList} setRecipeList={setRecipeList}>
                 </Recipe>*/}
                 <Form.Item
                     label="레시피"
                     style={{
-                        marginBottom: 0,
+                        marginBottom: 0, fontWeight: 'bold'
                     }}
                 >
                     <Form.Item>
