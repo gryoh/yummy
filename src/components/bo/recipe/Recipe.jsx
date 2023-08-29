@@ -31,7 +31,7 @@ export default function Recipe(props){
         <Form.Item
             label="레시피"
             style={{
-                marginBottom: 0,
+                marginBottom: 0, fontWeight: "bold",
             }}
         >
             <Form.Item>

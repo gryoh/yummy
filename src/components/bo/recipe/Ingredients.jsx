@@ -17,7 +17,22 @@ export default function Ingredients(props){
         );
     }
 
+    const makeIngre = () => {
+        let id = 1;
+
+        if ( props.ingreList.length > 0) {
+            id = props.ingreList[props.ingreList.length-1].id +1
+        }
+
+        props.setIngreList(props.ingreList.concat({
+            id: id,
+            name: '',
+            cnt:''
+        }))
+    }
+
     const onChange = (id, value, type) => {
+
         let tempIngreList = props.ingreList;
         let ingreList = tempIngreList.map(data => {
             if(data.id == Number(id)){
@@ -46,7 +61,7 @@ export default function Ingredients(props){
         <Form.Item
             label="재료"
             style={{
-                marginBottom: 0,
+                fontWeight: 'bold',
             }}
         >
             {props.ingreList && props.ingreList.map((item, i) => (
@@ -74,7 +89,7 @@ export default function Ingredients(props){
                             options={
                                 props.ingreOptions.data
                             }
-                            onChange={(e) => nameChange(item.id, e , 'name')}
+                            onChange={(e) => onChange(item.id, e , 'name')}
                         />
                     </Form.Item>
                     <Form.Item
@@ -89,7 +104,7 @@ export default function Ingredients(props){
                             margin: '0 8px',
                         }}
                     >
-                        <Input placeholder="수량" value={item.cnt}  onChange={(e) => nameChange(item.id, e , 'cnt')}/>
+                        <Input placeholder="수량" value={item.cnt}  onChange={(e) => onChange(item.id, e.target.value , 'cnt')}/>
                     </Form.Item>
                     <Form.Item
                         name="month"
@@ -104,12 +119,15 @@ export default function Ingredients(props){
                             margin: '0 8px',
                         }}
                     >
-                        <Button onClick={(event) => removeIngre(item.id)} type="primary" style={{width: '100%'}} ghost>
+                        <Button onClick={(event) => removeIngre(item.id)} type="primary" style={{width: '100%', color: 'black', borderColor: '#d9d9d9'}} ghost>
                             -
                         </Button>
                     </Form.Item>
                 </Form.Item>
             ))}
+            <Button onClick={makeIngre} type="primary" style={{width: '100%'}} ghost>
+                재료 추가
+            </Button>
         </Form.Item>
     )
 }
