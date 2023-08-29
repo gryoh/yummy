@@ -25,10 +25,10 @@ export default function Login() {
             mbrPw :loginPw
         })
         .then((res) => {
-            console.log(res.data)
+            console.log(res.data);
         })
         .catch((error) => {
-            console.log('error --->' + error)
+            console.log('error --->' + error);
         })
     }
 
@@ -39,11 +39,11 @@ export default function Login() {
     }
 
 
-    const handleloginId = (e) => {
+    const handleLoginId = (e) => {
         setLoginId(e.target.value);
       };
     
-    const handleloginPw = (e) => {
+    const handleLoginPw = (e) => {
         setLoginPw(e.target.value);
     };
 
@@ -53,8 +53,8 @@ export default function Login() {
             <NaverBtn text='네이버 로그인'/>
             <MemberLine text='또는'/>
             
-            <MemberInput placeholder='이메일' name='eMail' value={loginId} parentInputEvent={handleloginId} ref={childRef}/><br />
-            <MemberInput placeholder='비밀번호' name='passWord' value={loginPw} parentInputEvent={handleloginPw} ref={childRef}/><br />
+            <MemberInput placeholder='이메일' name='eMail' value={loginId} parentInputEvent={handleLoginId} ref={childRef}/><br />
+            <MemberInput placeholder='비밀번호' name='passWord' value={loginPw} parentInputEvent={handleLoginPw} ref={childRef}/><br />
             <MemberBtn name='로그인' type='button' parentBtnEvent={parentBtnEvent} ref={childRef}/><br />
             
             <p className={styles.base_txt_box}>계정이 없으신가요? <Link href="/member/join" className={styles.blue_link_txt}>가입하기</Link> </p>
