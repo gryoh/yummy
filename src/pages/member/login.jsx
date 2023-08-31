@@ -26,6 +26,10 @@ export default function Login() {
         })
         .then((res) => {
             console.log(res.data);
+            if ('F' != res.data) {
+                window.sessionStorage.setItem('mbrLoginId', res.data);
+            }
+           
         })
         .catch((error) => {
             console.log('error --->' + error);
