@@ -22,11 +22,11 @@ interface FixedDataType {
   })=>{
   const mapLength = props.recipedescription.length;
 
-  let keyMap : any;
+  let keyMap : any = [];
   props.recipedescription.map((it : any)=>{
     keyMap.push(it.key);
   })
-  let valueMap : any;
+  let valueMap : any = [];
   props.recipedescription.map((it : any)=>{
     valueMap.push(it.value);
   })

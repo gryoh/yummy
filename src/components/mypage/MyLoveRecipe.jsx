@@ -19,7 +19,7 @@ export default function MyLoveRecipe(props) {
                         title={props.name}
                         description={
                             <span>
-                            <img style={{width: '10px'}} alt="별점" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJDl8d9OEA-kKEwWVx-tVPROFry3I3tBddUg&usqp=CAU"/>
+                            <img style={{width: '10px', display:'inline-block'}} alt="별점" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJDl8d9OEA-kKEwWVx-tVPROFry3I3tBddUg&usqp=CAU"/>
                             {props.point} ({props.viewCount})
                             </span>
                         }

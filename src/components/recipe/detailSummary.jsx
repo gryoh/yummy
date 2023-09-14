@@ -11,7 +11,7 @@ export default function detailSummary(props) {
     const [recipedescription, setrecipedescription] = useState([]);
 
     const getData = async()=>{
-    const res = await fetch("/api/recipe/recipeDtail"
+    const res = await fetch("/api/recipe/recipeDetail"
     ).then((res)=> res.json());
     
     setrecipeTime(res.requiredTime / 1000 / 60) ;
