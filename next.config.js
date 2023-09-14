@@ -17,6 +17,10 @@ const nextConfig = {
         destination: isDevelopment ? "http://localhost:8080/member/:path*" : "http://gryoh.synology.me:8083/member/:path*",
       },
       {
+        source: "/mypage/:path*",
+        destination: isDevelopment ? "http://localhost:8080/mypage/:path*" : "http://gryoh.synology.me:8083/mypage/:path*",
+      },
+      {
         source: "/v1/:path*",
         destination: isDevelopment ? "http://localhost:8080/v1/:path*" : "http://gryoh.synology.me:8083/v1/:path*",
       },

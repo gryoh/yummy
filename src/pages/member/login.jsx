@@ -17,17 +17,15 @@ export default function Login() {
     const childRef = useRef();
  
     const parentBtnEvent = (e) => {
-        console.log("ID : ", loginId);
-        console.log("PW : ", loginPw);
         axios.post('/member/goLogin',
         {
             loginId : loginId,
             mbrPw :loginPw
         })
         .then((res) => {
-            console.log(res.data);
             if ('F' != res.data) {
                 window.sessionStorage.setItem('mbrLoginId', res.data);
+                location.href = '/mypage/myPage'
             }
            
         })

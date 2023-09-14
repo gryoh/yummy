@@ -9,13 +9,45 @@ import LatestViewRecipe from "../../components/mypage/LatestViewRecipe";
 import MyPageHeader from "../../components/mypage/MyPageHeader";
 import styles from "../../components/mypage/mypage.module.css";
 import globalStyle from "../../assets/global.css";
-
-
+import axios from 'axios';
 
 export default function Mypage() {
     const [ingredienrList, setIngredienrList] = useState([]);
     const [loveRecipeList, setloveRecipeList] = useState([]);
+    const [memberName, setmemberName] = useState("");
     useEffect(() => {
+       
+        //로그인 여부 체크
+        if (null != window.sessionStorage.getItem('mbrLoginId') && "" != window.sessionStorage.getItem('mbrLoginId')) {
+            //header에 토큰 설정
+            axios.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('mbrLoginId');
+            const getMemberInfo = async () => {
+                axios.get('/member/getMbrInfo')
+                .then((res) => {
+                    setmemberName(res.data.name);
+                    getloveRecipeList();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+            getMemberInfo();
+             //레시피가져오기
+            const getloveRecipeList = async () => {
+            axios.get('/mypage/getMyPageMbrRcpLike')
+            .then((res) => {
+                setloveRecipeList(res.data);
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        };
+        } else {
+            location.href = '/member/login'
+        }
+       
+        
         // 재려가져오기
         const getIngredienrList = async () => {
             const res = await fetch("/api/mypage/ingredient");
@@ -24,21 +56,18 @@ export default function Mypage() {
             setIngredienrList(data);
         };
         getIngredienrList();
-        //레시피가져오기
-        const getloveRecipeList = async () => {
-            const res = await fetch("/api/mypage/loverecipe");
-            const data = await res.json();
-
-            setloveRecipeList(data);
-        };
-        getloveRecipeList();
+        
+        
+       
        
     },[])
+
+    
     const ingredienr = ingredienrList.map((ingredienr, index) => (
         <MyIngredient key={ingredienr.name} {...ingredienr} />
     ));
     const loveRecive = loveRecipeList.map((loveRecive, index) => (
-        <MyLoveRecipe key={loveRecive.name} {...loveRecive} />
+        <MyLoveRecipe key={loveRecive.rcpName} {...loveRecive} />
     ));
     
     const router = useRouter();
@@ -49,7 +78,7 @@ export default function Mypage() {
     return (
         <Layout>
             <div>
-                <MyPageHeader/>
+                <MyPageHeader mbrName={memberName}/>
             </div>
             <div style={{backgroundColor: '#E2E2E2', paddingTop:'20px'}}>
                 <div className={styles.mypageCont_box}>
