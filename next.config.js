@@ -14,15 +14,24 @@ const nextConfig = {
     return [
       {
         source: "/member/:path*",
-        destination: isDevelopment ? "http://localhost:8080/member/:path*" : "http://gryoh.synology.me:8083/member/:path*",
+        destination: isDevelopment ? "http://localhost:8080/member/:path*" : "http://gryoh.synology.me:8083/v1/:path*",
       },
       {
+<<<<<<< HEAD
         source: "/mypage/:path*",
         destination: isDevelopment ? "http://localhost:8080/mypage/:path*" : "http://gryoh.synology.me:8083/mypage/:path*",
       },
       {
         source: "/v1/:path*",
         destination: isDevelopment ? "http://localhost:8080/v1/:path*" : "http://gryoh.synology.me:8083/v1/:path*",
+=======
+        source: "/rcp/:path*",
+        destination: isDevelopment ? "http://localhost:8080/rcp/:path*" : "http://gryoh.synology.me:8083/rcp/:path*",
+      },
+      {
+        source: "/mealPlanner/:path*",
+        destination: isDevelopment ? "http://localhost:8080/mealPlanner/:path*" : "http://gryoh.synology.me:8083/mealPlanner/:path*",
+>>>>>>> develop
       },
     ];
   }
