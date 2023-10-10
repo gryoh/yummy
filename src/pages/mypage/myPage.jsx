@@ -12,8 +12,8 @@ import globalStyle from "../../assets/global.css";
 import axios from 'axios';
 
 export default function Mypage() {
-    const [ingredienrList, setIngredienrList] = useState([]);
     const [loveRecipeList, setloveRecipeList] = useState([]);
+    const [mbrStuffList, setstuffList] = useState([]);
     const [memberName, setmemberName] = useState("");
     useEffect(() => {
        
@@ -25,19 +25,19 @@ export default function Mypage() {
                 axios.get('/member/getMbrInfo')
                 .then((res) => {
                     setmemberName(res.data.name);
-                    getloveRecipeList();
+                    getMyPageRcpStuff();
                 })
                 .catch((error) => {
                     console.log(error);
                 })
             }
             getMemberInfo();
-             //레시피가져오기
-            const getloveRecipeList = async () => {
-            axios.get('/mypage/getMyPageMbrRcpLike')
+             //찜란 레시피, 재료 가져오기
+            const getMyPageRcpStuff = async () => {
+            axios.get('/mypage/getMyPageRcpStuff')
             .then((res) => {
-                setloveRecipeList(res.data);
-                console.log(res.data);
+                setloveRecipeList(res.data.myPageMbrRcpLike[0]);
+                setstuffList(res.data.myPageMbrStuff[0]);
             })
             .catch((error) => {
                 console.log(error);
@@ -46,28 +46,15 @@ export default function Mypage() {
         } else {
             location.href = '/member/login'
         }
-       
-        
-        // 재려가져오기
-        const getIngredienrList = async () => {
-            const res = await fetch("/api/mypage/ingredient");
-            const data = await res.json();
-
-            setIngredienrList(data);
-        };
-        getIngredienrList();
-        
-        
-       
-       
     },[])
 
-    
-    const ingredienr = ingredienrList.map((ingredienr, index) => (
-        <MyIngredient key={ingredienr.name} {...ingredienr} />
-    ));
+    //레시피 컴포넌트 생성
     const loveRecive = loveRecipeList.map((loveRecive, index) => (
         <MyLoveRecipe key={loveRecive.rcpName} {...loveRecive} />
+    ));
+    //재료 컴포넌트 생성
+    const mbrStuff = mbrStuffList.map((mbrStuff, index) => (
+        <MyIngredient key={mbrStuff.stuffName} {...mbrStuff} />
     ));
     
     const router = useRouter();
@@ -110,7 +97,7 @@ export default function Mypage() {
                         bodyStyle={{padding: '10px'}}
                     >
                         <Row wrap="ture">
-                            {ingredienr}
+                            {mbrStuff}
                         </Row>
                     </Card>
                 </div>
