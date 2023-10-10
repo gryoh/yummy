@@ -9,7 +9,7 @@ export default function MyPageHeader(props) {
             <Row className={styles.mypageHeader_box}>
                 <Col span={12}>
                     <Avatar size={48} icon={<UserOutlined />} />
-                    <span  className={styles.mypageHeader_name}>홍길동</span>
+                    <span className={styles.mypageHeader_name}>{props.mbrName}</span>
                 </Col>
                 <Col span={6}>
                     <p>4</p>
