@@ -2,7 +2,6 @@ import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import React, {useState, useRef, useMemo} from "react";
 import AWS from "aws-sdk";
-import axios from "axios";
 
   const ReactQuill = dynamic(
       async () => {
@@ -13,10 +12,8 @@ import axios from "axios";
       {ssr: false}
   );
 
-export default function TextEditor(){
-    const [value, setValue] = useState('');
+export default function TextEditor(props){
     const quillRef = useRef();
-
 
     const imageHandler = () => {
         console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
@@ -73,7 +70,7 @@ export default function TextEditor(){
 
             try {
                 //업로드할 파일의 이름으로 Date 사용
-                const name = Date.now();
+                const name = Date.now()+ "_" + file.name
                 //생성한 s3 관련 설정들
                 AWS.config.update({
                     region: 'ap-northeast-2',
@@ -131,11 +128,11 @@ export default function TextEditor(){
         <div>
             <ReactQuill
                 forwardedRef={quillRef}
-                value={value}
-                onChange={setValue}
+                value={props.contentValue}
+                onChange={props.setContentValue}
                 modules={modules}
             />
-            <div dangerouslySetInnerHTML={{ __html :  '<h1>test</h1>' }} />
+            {/*<div dangerouslySetInnerHTML={{ __html :  value }} />*/}
         </div>
     )
 

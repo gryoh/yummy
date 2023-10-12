@@ -9,36 +9,52 @@ import LatestViewRecipe from "../../components/mypage/LatestViewRecipe";
 import MyPageHeader from "../../components/mypage/MyPageHeader";
 import styles from "../../components/mypage/mypage.module.css";
 import globalStyle from "../../assets/global.css";
-
-
+import axios from 'axios';
 
 export default function Mypage() {
-    const [ingredienrList, setIngredienrList] = useState([]);
     const [loveRecipeList, setloveRecipeList] = useState([]);
+    const [mbrStuffList, setstuffList] = useState([]);
+    const [memberName, setmemberName] = useState("");
     useEffect(() => {
-        // 재려가져오기
-        const getIngredienrList = async () => {
-            const res = await fetch("/api/mypage/ingredient");
-            const data = await res.json();
-
-            setIngredienrList(data);
-        };
-        getIngredienrList();
-        //레시피가져오기
-        const getloveRecipeList = async () => {
-            const res = await fetch("/api/mypage/loverecipe");
-            const data = await res.json();
-
-            setloveRecipeList(data);
-        };
-        getloveRecipeList();
        
+        //로그인 여부 체크
+        if (null != window.sessionStorage.getItem('mbrLoginId') && "" != window.sessionStorage.getItem('mbrLoginId')) {
+            //header에 토큰 설정
+            axios.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('mbrLoginId');
+            const getMemberInfo = async () => {
+                axios.get('/member/getMbrInfo')
+                .then((res) => {
+                    setmemberName(res.data.name);
+                    getMyPageRcpStuff();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+            getMemberInfo();
+             //찜란 레시피, 재료 가져오기
+            const getMyPageRcpStuff = async () => {
+            axios.get('/mypage/getMyPageRcpStuff')
+            .then((res) => {
+                setloveRecipeList(res.data.myPageMbrRcpLike[0]);
+                setstuffList(res.data.myPageMbrStuff[0]);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        };
+        } else {
+            location.href = '/member/login';
+        }
     },[])
-    const ingredienr = ingredienrList.map((ingredienr, index) => (
-        <MyIngredient key={ingredienr.name} {...ingredienr} />
-    ));
+
+    //레시피 컴포넌트 생성
     const loveRecive = loveRecipeList.map((loveRecive, index) => (
-        <MyLoveRecipe key={loveRecive.name} {...loveRecive} />
+        <MyLoveRecipe key={loveRecive.rcpName} {...loveRecive} />
+    ));
+    //재료 컴포넌트 생성
+    const mbrStuff = mbrStuffList.map((mbrStuff, index) => (
+        <MyIngredient key={mbrStuff.stuffName} {...mbrStuff} />
     ));
     
     const router = useRouter();
@@ -49,7 +65,7 @@ export default function Mypage() {
     return (
         <Layout>
             <div>
-                <MyPageHeader/>
+                <MyPageHeader mbrName={memberName}/>
             </div>
             <div style={{backgroundColor: '#E2E2E2', paddingTop:'20px'}}>
                 <div className={styles.mypageCont_box}>
@@ -81,7 +97,7 @@ export default function Mypage() {
                         bodyStyle={{padding: '10px'}}
                     >
                         <Row wrap="ture">
-                            {ingredienr}
+                            {mbrStuff}
                         </Row>
                     </Card>
                 </div>
