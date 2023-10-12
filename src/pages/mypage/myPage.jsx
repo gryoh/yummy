@@ -44,7 +44,7 @@ export default function Mypage() {
             })
         };
         } else {
-            location.href = '/member/login'
+            location.href = '/member/login';
         }
     },[])
 
