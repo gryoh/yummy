@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Layout from '../../components/common/layout';
 import utilStyles from '../../assets/utils.module.css';
 import Head from 'next/head';
@@ -19,7 +19,12 @@ export default function Join() {
     const [name, setName] = useState('');
     
     const childRef = useRef();
-
+    useEffect(() => {
+        //로그인 여부 체크
+        if (null != window.sessionStorage.getItem('mbrLoginId') && "" != window.sessionStorage.getItem('mbrLoginId')) {
+            location.href = '/mypage/myPage';
+        }
+    },[]);
     /* input handeler */
     const handleLoginId = (e) => {
         setLoginId(e.target.value);
@@ -126,8 +131,8 @@ export default function Join() {
        
             <MemberInput placeholder='이메일) example@example.com' name='loginId' value={loginId} parentInputEvent={handleLoginId} ref={childRef}/><br />
             <MemberInput placeholder='성명) 홍길동' name='name' value={name} parentInputEvent={handleName} ref={childRef}/><br />
-            <MemberInput placeholder='전화번호) 01012341234' name='phone' value={phone} parentInputEvent={handlePhone} ref={childRef}/><br />
-            <MemberInput placeholder='비밀번호) 4~12자의 영문 대소문자와 숫자' name='loginPw' value={loginPw} parentInputEvent={handleLoginPw} ref={childRef}/><br />
+            <MemberInput placeholder='전화번호) 01012341234' name='phone' value={phone} parentInputEvent={handlePhone} ref={childRef} type='number'/><br />
+            <MemberInput placeholder='비밀번호) 4~12자의 영문 대소문자와 숫자' name='loginPw' value={loginPw} parentInputEvent={handleLoginPw} ref={childRef} type='password'/><br />
             <MemberBtn name='가입' type='button' parentBtnEvent={parentBtnEvent} ref={childRef}/>
            
             <p className={styles.base_txt_box}>가입하면 OOO의 약관 데이터 정책 및 쿠키 정책에 동의하게 됩니다.</p>
