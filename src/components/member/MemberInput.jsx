@@ -8,7 +8,7 @@ export default function MemberInput(props, ref) {
 
     return (
         <>
-            <Input placeholder={props.placeholder} name={props.name} className={styles.input_member} onChange={parentEvent}/>
+            <Input placeholder={props.placeholder} name={props.name} className={styles.input_member} onChange={parentEvent} type={props.type}/>
         </>  
     )
 }
