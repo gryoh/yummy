@@ -10,15 +10,23 @@ import MyPageHeader from "../../components/mypage/MyPageHeader";
 import styles from "../../components/mypage/mypage.module.css";
 import globalStyle from "../../assets/global.css";
 import axios from 'axios';
+import { isLogin } from '../../utils/memberUtil.js';
 
 export default function Mypage() {
     const [loveRecipeList, setloveRecipeList] = useState([]);
     const [mbrStuffList, setstuffList] = useState([]);
     const [memberName, setmemberName] = useState("");
+    
+    const router = useRouter();
+    if (router.isFallback) {
+        return <div>Loading...</div>;
+    }
+    //https://eundol1113.tistory.com/281
     useEffect(() => {
-       
-        //로그인 여부 체크
-        if (null != window.sessionStorage.getItem('mbrLoginId') && "" != window.sessionStorage.getItem('mbrLoginId')) {
+
+        if (!isLogin()) {
+            router.push('/member/login');
+        } else {
             //header에 토큰 설정
             axios.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('mbrLoginId');
             const getMemberInfo = async () => {
@@ -32,20 +40,19 @@ export default function Mypage() {
                 })
             }
             getMemberInfo();
-             //찜란 레시피, 재료 가져오기
+                //찜란 레시피, 재료 가져오기
             const getMyPageRcpStuff = async () => {
-            axios.get('/mypage/getMyPageRcpStuff')
-            .then((res) => {
-                setloveRecipeList(res.data.myPageMbrRcpLike[0]);
-                setstuffList(res.data.myPageMbrStuff[0]);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        };
-        } else {
-            location.href = '/member/login';
+                axios.get('/mypage/getMyPageRcpStuff')
+                .then((res) => {
+                    setloveRecipeList(res.data.myPageMbrRcpLike[0]);
+                    setstuffList(res.data.myPageMbrStuff[0]);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            };
         }
+        
     },[])
 
     //레시피 컴포넌트 생성
@@ -57,11 +64,7 @@ export default function Mypage() {
         <MyIngredient key={mbrStuff.stuffName} {...mbrStuff} />
     ));
     
-    const router = useRouter();
-    if (router.isFallback) {
-        return <div>Loading...</div>;
-    }
-    
+ 
     return (
         <Layout>
             <div>
